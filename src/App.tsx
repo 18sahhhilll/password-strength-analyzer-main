@@ -246,7 +246,7 @@ export default function PasswordAnalyzer() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-4 sm:p-6 lg:p-8">
       {/* GitHub Floating Button */}
-      <GithubFloatingButton repoUrl="https://github.com/yourusername/password-analyzer" />
+      <GithubFloatingButton repoUrl="https://github.com/18sahhhilll/password-strength-analyzer-main" />
       
       <div className="max-w-7xl mx-auto">
         {/* Header */}
