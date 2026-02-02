@@ -216,16 +216,25 @@ export default function PasswordAnalyzer() {
   const crackTime = useMemo(() => estimateCrackTime(analysis.entropy, attackModel), [analysis.entropy, attackModel]);
   const suggestions = useMemo(() => generateSuggestions(analysis), [analysis]);
 
-  useEffect(() => {
-    if (password.length > 0) {
-      setEntropyHistory(prev => {
-        const newHistory = [...prev, { chars: password.length, entropy: analysis.entropy }];
-        return newHistory.slice(-50);
+    useEffect(() => {
+      if (!password) {
+        setEntropyHistory([]);
+        return;
+      }
+
+      const newHistory = Array.from({ length: password.length }, (_, i) => {
+        const partial = password.slice(0, i + 1);
+        const analysis = analyzePassword(partial);
+
+        return {
+          chars: i + 1,
+          entropy: analysis.entropy
+        };
       });
-    } else {
-      setEntropyHistory([]);
-    }
-  }, [password.length, analysis.entropy]);
+
+      setEntropyHistory(newHistory);
+    }, [password]);
+
 
   const strengthColor = {
     'Very Weak': 'bg-red-500',
@@ -246,7 +255,7 @@ export default function PasswordAnalyzer() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-4 sm:p-6 lg:p-8">
       {/* GitHub Floating Button */}
-      <GithubFloatingButton repoUrl="https://github.com/18sahhhilll/password-strength-analyzer-main" />
+      <GithubFloatingButton repoUrl="https://github.com/18sahhhilll/password-strength-analyzer" />
       
       <div className="max-w-7xl mx-auto">
         {/* Header */}
